@@ -7,7 +7,7 @@ A hybrid healthcare assistant that answers questions using either:
 
 Routing is handled by a **Planner Agent** using **LangGraph**.
 
-> Note: This README intentionally does **not** include any secrets or values from `.env` files.
+
 
 ---
 
