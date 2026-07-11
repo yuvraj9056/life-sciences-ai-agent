@@ -1,0 +1,8 @@
+Life Sciences AI Agent Evaluation
+==================================================
+
+Total Questions : 75
+Successful      : 66
+Failed          : 9
+Average Time    : 57.27 sec
+Total Time      : 3779.75 sec

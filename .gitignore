@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual Environment
+.venv/
+venv/
+
+# VS Code
+.vscode/
+
+# Environment Variables
+.env
+
+# Logs
+logs/
+*.log
+
+# Evaluation Outputs
+evaluation/results/
+evaluation/*.txt
+
+# Streamlit
+.streamlit/secrets.toml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Python build
+build/
+dist/
+*.egg-info/
+
+# Cache
+.cache/
+
+# Ollama
+models/
+
+# Local Memory
+chat_memory.json

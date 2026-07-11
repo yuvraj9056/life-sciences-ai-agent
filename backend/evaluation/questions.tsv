@@ -1,0 +1,76 @@
+ID	Question
+SQL-001	How many patients are there?
+SQL-002	How many male patients are there?
+SQL-003	How many female patients are there?
+SQL-004	List the first 10 patients.
+SQL-005	Which patients have the highest healthcare expenses?
+SQL-006	What is the average healthcare coverage?
+SQL-007	Which city has the highest number of patients?
+SQL-008	Show patients born after 1990.
+SQL-009	Show patients from California.
+SQL-010	What is the average income of patients?
+SQL-011	How many diabetic patients are there?
+SQL-012	How many hypertension patients are there?
+SQL-013	List all unique medical conditions.
+SQL-014	Which condition is most common?
+SQL-015	Show all patients diagnosed with diabetes.
+SQL-016	How many encounters involved diabetes?
+SQL-017	List conditions diagnosed in the last year.
+SQL-018	Which patients have multiple conditions?
+SQL-019	How many encounters are recorded?
+SQL-020	What are the encounter classes?
+SQL-021	Which encounter class is most common?
+SQL-022	Show emergency encounters.
+SQL-023	Which encounter had the highest claim cost?
+SQL-024	What is the average encounter cost?
+SQL-025	List encounters for a specific patient.
+SQL-026	Which organization handled the most encounters?
+SQL-027	What observation categories exist?
+SQL-028	Show all blood pressure observations.
+SQL-029	Show glucose observations.
+SQL-030	What is the average BMI?
+SQL-031	List observations for diabetic patients.
+SQL-032	Which medications are prescribed most often?
+SQL-033	Show diabetes medications.
+SQL-034	What is the average medication cost?
+SQL-035	Which medication has the highest total cost?
+SQL-036	List all organizations.
+SQL-037	Which organization has the highest revenue?
+SQL-038	Which organization has the highest utilization?
+SQL-039	List all provider specialties.
+SQL-040	Which provider has the most encounters?
+RAG-001	What is diabetes mellitus?
+RAG-002	What are the causes of diabetes?
+RAG-003	What are the symptoms of diabetes?
+RAG-004	How is diabetes diagnosed?
+RAG-005	What complications can diabetes cause?
+RAG-006	What lifestyle changes help manage diabetes?
+RAG-007	What medications are used for diabetes?
+RAG-008	What is HbA1c?
+RAG-009	What blood glucose levels indicate diabetes?
+RAG-010	How often should diabetics monitor blood sugar?
+RAG-011	What is hypertension?
+RAG-012	What causes high blood pressure?
+RAG-013	What foods reduce blood pressure?
+RAG-014	What is the DASH diet?
+RAG-015	How much sodium should adults consume?
+RAG-016	What are hypertension risk factors?
+RAG-017	How is hypertension diagnosed?
+RAG-018	What medications treat hypertension?
+RAG-019	What blood pressure is considered normal?
+RAG-020	How often should blood pressure be checked?
+RAG-021	Who should receive the pneumococcal vaccine?
+RAG-022	When should adults receive pneumococcal vaccines?
+RAG-023	Which adults require additional vaccine doses?
+RAG-024	What vaccines are recommended for older adults?
+RAG-025	What is the adult immunization schedule?
+RAG-026	What does JNC 7 recommend?
+RAG-027	What blood pressure target should diabetic patients maintain?
+RAG-028	What lifestyle interventions reduce hypertension?
+RAG-029	How should hypertension treatment begin?
+RAG-030	What is metabolic syndrome?
+RAG-031	What are the components of metabolic syndrome?
+RAG-032	How does obesity contribute to diabetes?
+RAG-033	What are cardiovascular risks associated with diabetes?
+RAG-034	What is the role of exercise in diabetes management?
+RAG-035	What diet is recommended for diabetic patients?

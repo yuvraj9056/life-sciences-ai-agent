@@ -1,0 +1,3546 @@
+
+================================================================================
+SQL-007
+Which city has the highest number of patients?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.organizations'. (208) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.organizations'. (208) (SQLExecDirectW)")
+[SQL: SELECT TOP 1 T2.CITY, COUNT(*) AS PatientCount
+FROM patients AS T1
+JOIN dbo.organizations AS T2 ON T1.ORGANIZATION = T2.Id
+GROUP BY T2.CITY
+ORDER BY PatientCount DESC]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '431974cb-f2cb-9dd9-1ca9-651d380f3571'
+
+
+================================================================================
+SQL-009
+Show patients from California.
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'organizations'. (208) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'organizations'. (208) (SQLExecDirectW)")
+[SQL: SELECT p.FIRST, p.LAST, p.ADDRESS, p.CITY, p.STATE, p.ZIP, p.LAT, p.LON
+FROM patients p
+JOIN organizations o ON p.STATE = o.STATE AND p.ZIP = o.ZIP
+WHERE o.NAME LIKE '%California%']
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '275aa700-273a-9191-ce80-8caf45e8bbb7'
+
+
+================================================================================
+SQL-014
+Which condition is most common?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+[SQL: SELECT CODE, DESCRIPTION, COUNT(*) as ConditionCount
+FROM conditions
+GROUP BY CODE, DESCRIPTION
+ORDER BY ConditionCount DESC
+LIMIT 1]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id 'fb344817-c0c0-885d-2b21-cfc1f5363ffa'
+
+
+================================================================================
+SQL-018
+Which patients have multiple conditions?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'PATIENT'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'PATIENT'. (207); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'PATIENT'. (207)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'PATIENT'. (207) (SQLExecDirectW); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'PATIENT'. (207); [42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'PATIENT'. (207)")
+[SQL: SELECT P.PATIENT, COUNT(C.PATIENT) AS ConditionCount
+FROM patients P
+JOIN conditions C ON P.PATIENT = C.PATIENT
+GROUP BY P.PATIENT
+HAVING COUNT(C.PATIENT) > 1]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id 'd208db6a-8d18-12d4-1766-db23c0d6d80e'
+
+
+================================================================================
+SQL-021
+Which encounter class is most common?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+[SQL: SELECT ENCOUNTERCLASS, COUNT(*) AS EncounterCount
+FROM encounters
+GROUP BY ENCOUNTERCLASS
+ORDER BY EncounterCount DESC
+LIMIT 1;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '20921a3b-5a68-f52e-c561-b934c8cc0fcb'
+
+
+================================================================================
+SQL-023
+Which encounter had the highest claim cost?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+[SQL: SELECT Id, START, STOP, PATIENT, ORGANIZATION, PROVIDER, PAYER, ENCOUNTERCLASS, CODE, DESCRIPTION, BASE_ENCOUNTER_COST, TOTAL_CLAIM_COST, PAYER_COVERAGE, REASONCODE, REASONDESCRIPTION
+FROM encounters
+ORDER BY TOTAL_CLAIM_COST DESC
+LIMIT 1]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id 'a6a84d1c-5eb2-d439-84a6-e2a51c6ce879'
+
+
+================================================================================
+SQL-026
+Which organization handled the most encounters?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+[SQL: SELECT o.NAME, COUNT(e.Id) AS EncounterCount
+FROM organizations o
+JOIN encounters e ON o.Id = e.ORGANIZATION
+GROUP BY o.NAME
+ORDER BY EncounterCount DESC
+LIMIT 1]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '1b076ef4-af02-5fd4-6084-a26152155c64'
+
+
+================================================================================
+SQL-027
+What observation categories exist?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.observations'. (208) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.observations'. (208) (SQLExecDirectW)")
+[SQL: SELECT DISTINCT CATEGORY FROM dbo.observations WHERE CATEGORY IS NOT NULL]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '3c822589-e1a1-50ca-4bcd-da92f1bde927'
+
+
+================================================================================
+SQL-028
+Show all blood pressure observations.
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.observations'. (208) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.observations'. (208) (SQLExecDirectW)")
+[SQL: SELECT DATE, PATIENT, ENCOUNTER, CATEGORY, CODE, DESCRIPTION, VALUE AS BLOODPRESSUREVALUE, UNITS 
+FROM dbo.observations 
+WHERE DESCRIPTION LIKE '%blood pressure%']
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id 'd19fb53b-d81e-4da7-12ef-18a135a67ef2'
+
+
+================================================================================
+SQL-029
+Show glucose observations.
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.observations'. (208) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.observations'. (208) (SQLExecDirectW)")
+[SQL: SELECT o.DATE, o.PATIENT, o.ENCOUNTER, o.CATEGORY, o.CODE, o.DESCRIPTION, o.VALUE, o.UNITS, o.TYPE
+FROM dbo.observations o
+JOIN patients p ON o.PATIENT = p.ID
+WHERE o.VALUE LIKE '%glucose%']
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '58c56517-fd26-96f0-a3ad-49baa1a4e7bc'
+
+
+================================================================================
+SQL-031
+List observations for diabetic patients.
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.observations'. (208) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.observations'. (208) (SQLExecDirectW)")
+[SQL: SELECT o.*
+FROM dbo.observations o
+JOIN patients p ON o.PATIENT = p.Id
+WHERE p.LAST LIKE '%diabetic%']
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id 'bcf6582e-0f1d-ad9c-36c5-0e288607d59d'
+
+
+================================================================================
+SQL-032
+Which medications are prescribed most often?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', '[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Operand data type nvarchar(max) is invalid for sum operator. (8117) (SQLExecDirectW)')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', '[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Operand data type nvarchar(max) is invalid for sum operator. (8117) (SQLExecDirectW)')
+[SQL: SELECT TOP 1 CODE, DESCRIPTION, SUM(BASE_COST) AS TotalCost
+FROM medications
+GROUP BY CODE, DESCRIPTION
+ORDER BY TotalCost DESC]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id 'ef42897a-1cf9-d46c-5096-1b6b609d3297'
+
+
+================================================================================
+SQL-033
+Show diabetes medications.
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'PATIENT'. (207) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S22', "[42S22] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid column name 'PATIENT'. (207) (SQLExecDirectW)")
+[SQL: SELECT 
+    p.PATIENT,
+    m.DESCRIPTION AS MedicationDescription,
+    m.BASE_COST AS Cost,
+    m.REASONCODE AS ReasonCode,
+    m.REASONDESCRIPTION AS ReasonDescription
+FROM 
+    patients p
+JOIN 
+    encounters e ON p.Id = e.PATIENT
+JOIN 
+    medications m ON e.Id = m.ENCOUNTER AND m.PAYER = 'YOUR_PAYER_CODE'  -- Replace 'YOUR_PAYER_CODE' with actual payer code if available
+WHERE 
+    m.DESCRIPTION LIKE '%diabetes%']
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '3b18911d-ca42-ab94-94ba-8d81f277a6de'
+
+
+================================================================================
+SQL-034
+What is the average medication cost?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', '[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Operand data type nvarchar(max) is invalid for avg operator. (8117) (SQLExecDirectW)')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', '[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Operand data type nvarchar(max) is invalid for avg operator. (8117) (SQLExecDirectW)')
+[SQL: SELECT AVG(TOTALCOST) AS Average_Medication_Cost FROM medications]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id 'f57dbb3b-19a2-c0d7-32ba-5f54b2a50391'
+
+
+================================================================================
+SQL-036
+List all organizations.
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.organizations'. (208) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.organizations'. (208) (SQLExecDirectW)")
+[SQL: SELECT NAME, ADDRESS, CITY, STATE, ZIP, REVENUE, UTILIZATION 
+FROM dbo.organizations]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '250ec8a2-5fac-4dba-58ab-30a570496239'
+
+
+================================================================================
+SQL-037
+Which organization has the highest revenue?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+[SQL: SELECT Id, NAME, REVENUE 
+FROM dbo.organizations 
+ORDER BY REVENUE DESC 
+LIMIT 1;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '7d07f044-beb0-c117-6780-2313171e8c2b'
+
+
+================================================================================
+SQL-038
+Which organization has the highest utilization?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+[SQL: SELECT Id, NAME, UTILIZATION AS HighestUtilization
+FROM dbo.organizations
+ORDER BY UTILIZATION DESC
+LIMIT 1;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '5084a027-921c-bb9e-767f-5af3f8464778'
+
+
+================================================================================
+SQL-039
+List all provider specialties.
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.providers'. (208) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.providers'. (208) (SQLExecDirectW)")
+[SQL: SELECT DISTINCT SPECIALITY FROM dbo.providers]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id 'c247ecf3-c238-8f9e-b281-b2d85330c40c'
+
+
+================================================================================
+SQL-040
+Which provider has the most encounters?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.providers'. (208) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'dbo.providers'. (208) (SQLExecDirectW)")
+[SQL: SELECT TOP 1 PROVIDER, COUNT(*) AS EncounterCount
+FROM dbo.providers p
+JOIN encounters e ON p.Id = e.PROVIDER
+GROUP BY PROVIDER
+ORDER BY EncounterCount DESC]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id 'eed21c64-fe36-c647-cb77-0f44df78509b'
+
+
+================================================================================
+SQL-009
+Show patients from California.
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'organizations'. (208) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42S02', "[42S02] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Invalid object name 'organizations'. (208) (SQLExecDirectW)")
+[SQL: SELECT p.FIRST, p.LAST, p.ADDRESS, p.CITY, p.STATE, p.ZIP, p.LAT, p.LON
+FROM patients p
+JOIN organizations o ON p.STATE = o.STATE AND p.ZIP = o.ZIP
+WHERE o.NAME LIKE '%California%']
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '96613d13-78a7-6380-cd9b-7aa3dc5dce5d'
+
+
+================================================================================
+SQL-004
+List the first 10 patients.
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+[SQL: SELECT FIRST, LAST, GENDER, BIRTHDATE, ADDRESS, CITY, STATE
+FROM dbo.patients
+ORDER BY Id ASC
+LIMIT 10;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '4441616c-607c-e05f-b910-a52a0b95ccb0'
+
+
+================================================================================
+SQL-007
+Which city has the highest number of patients?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+[SQL: SELECT CITY, COUNT(*) AS TotalPatients
+FROM dbo.patients
+GROUP BY CITY
+ORDER BY TotalPatients DESC
+LIMIT 1;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id 'addcd6c4-af76-d640-e1a5-3bbde7a724ef'
+
+
+================================================================================
+SQL-021
+Which encounter class is most common?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+[SQL: SELECT ENCOUNTERCLASS, COUNT(*) AS EncounterCount
+FROM encounters
+GROUP BY ENCOUNTERCLASS
+ORDER BY EncounterCount DESC
+LIMIT 1;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id 'd6cb213f-20d9-38d9-2539-221ac22672f9'
+
+
+================================================================================
+SQL-023
+Which encounter had the highest claim cost?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+[SQL: SELECT Id, PATIENT, MAX(TOTAL_CLAIM_COST) AS MaxClaimCost
+FROM encounters
+GROUP BY Id, PATIENT
+ORDER BY MaxClaimCost DESC
+LIMIT 1;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '68df5abd-6145-1fdf-060d-005c11e33763'
+
+
+================================================================================
+SQL-024
+What is the average encounter cost?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', '[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Operand data type nvarchar(max) is invalid for avg operator. (8117) (SQLExecDirectW)')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', '[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Operand data type nvarchar(max) is invalid for avg operator. (8117) (SQLExecDirectW)')
+[SQL: SELECT AVG(TOTAL_CLAIM_COST) AS AverageEncounterCost
+FROM encounters;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id 'ee18623d-02af-709e-4303-a5197c4f0b37'
+
+
+================================================================================
+SQL-026
+Which organization handled the most encounters?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+[SQL: SELECT o.NAME, COUNT(e.Id) AS TotalEncounters
+FROM encounters e
+JOIN organizations o ON e.ORGANIZATION = o.ID
+GROUP BY o.NAME
+ORDER BY TotalEncounters DESC
+LIMIT 1;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id 'd66e7149-500e-948f-8ef5-4514928e04ca'
+
+
+================================================================================
+SQL-034
+What is the average medication cost?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', '[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Operand data type nvarchar(max) is invalid for avg operator. (8117) (SQLExecDirectW)')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', '[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Operand data type nvarchar(max) is invalid for avg operator. (8117) (SQLExecDirectW)')
+[SQL: SELECT AVG(BASE_COST) AS AverageMedicationCost
+FROM medications;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '683b7c5c-5553-2164-d8af-64932867da38'
+
+
+================================================================================
+SQL-035
+Which medication has the highest total cost?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'LIMIT'. (102) (SQLExecDirectW)")
+[SQL: SELECT PATIENT, CODE, DESCRIPTION, SUM(TOTALCOST) AS TotalCost
+FROM medications
+GROUP BY PATIENT, CODE, DESCRIPTION
+ORDER BY TotalCost DESC
+LIMIT 1;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id '84b28e8a-0566-bdf2-4e02-7263b827dd85'
+
+
+================================================================================
+SQL-038
+Which organization has the highest utilization?
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+pyodbc.ProgrammingError: ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'UTILIZATION'. (102) (SQLExecDirectW)")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\evaluation\run_evaluation.py", line 59, in <module>
+    response = graph.invoke(
+        {
+    ...<2 lines>...
+        }
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 3026, in invoke
+    for chunk in self.stream(
+                 ~~~~~~~~~~~^
+        input,
+        ^^^^^^
+    ...<10 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\main.py", line 2647, in stream
+    for _ in runner.tick(
+             ~~~~~~~~~~~^
+        [t for t in loop.tasks.values() if not t.writes],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        schedule_task=loop.accept_push,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ):
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_runner.py", line 162, in tick
+    run_with_retry(
+    ~~~~~~~~~~~~~~^
+        t,
+        ^^
+    ...<10 lines>...
+        },
+        ^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\pregel\_retry.py", line 42, in run_with_retry
+    return task.proc.invoke(task.input, config)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 657, in invoke
+    input = context.run(step.invoke, input, config, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\langgraph\_internal\_runnable.py", line 401, in invoke
+    ret = self.func(*args, **kwargs)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\graph\workflow.py", line 47, in sql_node
+    result = sql_agent.run(question)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\agents\sql_agent_main.py", line 29, in run
+    df = self.executor.execute(sql)
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\backend\services\sql_executor.py", line 16, in execute
+    result = conn.execute(text(sql))
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1415, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 523, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1637, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<8 lines>...
+        cache_hit=cache_hit,
+    )
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1982, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2351, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1963, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\ranay\Desktop\life-sciences-ai-agent\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 943, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+sqlalchemy.exc.ProgrammingError: (pyodbc.ProgrammingError) ('42000', "[42000] [Microsoft][ODBC Driver 18 for SQL Server][SQL Server]Incorrect syntax near 'UTILIZATION'. (102) (SQLExecDirectW)")
+[SQL: SELECT o.NAME, MAX(o UTILIZATION) AS HighestUtilization
+FROM organizations o
+JOIN encounters e ON o.ID = e.ORGANIZATION
+GROUP BY o.NAME
+ORDER BY HighestUtilization DESC LIMIT 1;]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+During task with name 'sql' and id 'd25e0a76-fdb7-c0b7-4453-d2e9ec06bbb1'
+
